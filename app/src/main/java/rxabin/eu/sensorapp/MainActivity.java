@@ -7,12 +7,17 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +29,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager senSensorManager;
     private Sensor senGyroscope;
     private List<Ball> balls = new ArrayList<>();
+    private TextView X_value, Y_value, Z_value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ConstraintLayout mLayout = findViewById(R.id.main);
+        RelativeLayout mLayout = findViewById(R.id.main);
+
+        X_value = findViewById(R.id.textX);
+        Y_value = findViewById(R.id.textY);
+        Z_value = findViewById(R.id.textZ);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.transparent));
+            window.setNavigationBarColor(getResources().getColor(R.color.transparent));
+        }
+
 
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senGyroscope = senSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
@@ -52,19 +70,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Sensor mySensor = event.sensor;
         if (mySensor.getType() == Sensor.TYPE_GRAVITY) {
-            balls.get(1).setX_speed((float) (event.values[0]*-4));
-            balls.get(1).setY_speed((float) (event.values[1]*4));
+            balls.get(1).setX_speed((float) (event.values[0]*-3.7),event.values[2]);
+            balls.get(1).setY_speed((float) (event.values[1]*3.7),event.values[2]);
 
-            balls.get(0).setX_speed(event.values[0]*-2);
-            balls.get(0).setY_speed(event.values[1]*2);
+            balls.get(0).setX_speed((float) (event.values[0]*-2.3),event.values[2]);
+            balls.get(0).setY_speed((float) (event.values[1]*2.3),event.values[2]);
 
-            balls.get(2).setX_speed(event.values[0]*-1);
-            balls.get(2).setY_speed(event.values[1]*1);
+            balls.get(2).setX_speed((float) (event.values[0]*-0.7),event.values[2]);
+            balls.get(2).setY_speed((float) (event.values[1]*0.7),event.values[2]);
 
-            balls.get(3).setX_speed(event.values[0]*-3);
-            balls.get(3).setY_speed(event.values[1]*3);
+            balls.get(3).setX_speed((float) (event.values[0]*-3.3),event.values[2]);
+            balls.get(3).setY_speed((float) (event.values[1]*3.3),event.values[2]);
 
-            //speed.setText("X: "+ balls.get(1).getX_speed()+ ", Y:" +balls.get(1).getY_speed());
+            balls.get(4).setX_speed(event.values[0]*-4,event.values[2]);
+            balls.get(4).setY_speed(event.values[1]*4,event.values[2]);
+
+            balls.get(5).setX_speed(event.values[0]*-2,event.values[2]);
+            balls.get(5).setY_speed(event.values[1]*2,event.values[2]);
+
+            balls.get(6).setX_speed(event.values[0]*-5,event.values[2]);
+            balls.get(6).setY_speed(event.values[1]*5,event.values[2]);
+
+            X_value.setText("X: " + event.values[0]);
+            Y_value.setText("Y: " + event.values[1]);
+            Z_value.setText("Z: " + event.values[2]);
         }
 
     }
@@ -101,6 +130,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             balls.add(new Ball(100,75, 50, Color.BLUE));
             balls.add(new Ball(100,75, 20, Color.MAGENTA));
             balls.add(new Ball(100,75, 75, Color.GREEN));
+            balls.add(new Ball(100,75, 60, Color.YELLOW));
+            balls.add(new Ball(100,75, 40, Color.DKGRAY));
+            balls.add(new Ball(100,75, 140, Color.BLACK));
         }
         @Override
         protected void onDraw(Canvas canvas) {

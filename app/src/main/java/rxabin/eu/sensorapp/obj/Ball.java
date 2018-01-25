@@ -77,16 +77,16 @@ public class Ball{
         return x_speed;
     }
 
-    public void setX_speed(float x_speed) {
-        this.x_speed += x_speed;
+    public void setX_speed(float x_speed, float z_grav) {
+        this.x_speed = (float) ((this.x_speed/1.02) + (x_speed / z_grav));
     }
 
     public float getY_speed() {
         return y_speed;
     }
 
-    public void setY_speed(float y_speed) {
-        this.y_speed += y_speed;
+    public void setY_speed(float y_speed, float z_grav) {
+        this.y_speed = (float) ((this.y_speed/1.02) + (y_speed / z_grav));
     }
 
     public float getWeight() {
