@@ -40,10 +40,22 @@ public class Ball{
         //BOING!
         if(!canvas.getClipBounds().contains(bounds)){
             if(this.x-size<0 || this.x+size > canvas.getWidth()){
+                if (this.x-size<0){
+                    this.x= size/2 + 3;
+                } else {
+                    this.x = canvas.getWidth()- size/2 - 3;
+                }
                x_speed = x_speed*-1;
+
             }
             if(this.y-size<0 || this.y+size > canvas.getHeight()){
+                if (this.y-size<0){
+                    this.y = size/2 + 3;
+                } else {
+                    this.y = canvas.getHeight()- size/2 - 3;
+                }
                 y_speed = y_speed*-1;
+
             }
         }
     }
@@ -78,7 +90,10 @@ public class Ball{
     }
 
     public void setX_speed(float x_speed, float z_grav) {
-        this.x_speed = (float) ((this.x_speed/1.02) + (x_speed / z_grav));
+
+        if (z_grav > 3) this.x_speed = (float) ((this.x_speed/1.02) + (x_speed / z_grav));
+        else this.x_speed = (float) ((this.x_speed/1.02) + (x_speed/3));
+
     }
 
     public float getY_speed() {
@@ -86,7 +101,10 @@ public class Ball{
     }
 
     public void setY_speed(float y_speed, float z_grav) {
-        this.y_speed = (float) ((this.y_speed/1.02) + (y_speed / z_grav));
+
+        if (z_grav > 3) this.y_speed = (float) ((this.y_speed/1.02) + (y_speed / z_grav));
+        else this.y_speed = (float) ((this.y_speed/1.02) + (y_speed / 3));
+
     }
 
     public float getWeight() {
