@@ -41,6 +41,13 @@
         android:layout_alignStart="@+id/textX"
         android:text="Gravity" />
 
+    <TextView
+        android:id="@+id/balls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/gravity"
+        android:layout_alignStart="@+id/gravity"
+        android:text="Balls: " />
     <Button
         android:id="@+id/add"
         android:layout_width="wrap_content"

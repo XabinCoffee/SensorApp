@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager senSensorManager;
     private Sensor senGyroscope;
     private List<Ball> balls = new ArrayList<>();
-    private TextView X_value, Y_value, Z_value;
+    private TextView X_value, Y_value, Z_value, numberOfBalls;
+    private Button add, remove;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         X_value = findViewById(R.id.textX);
         Y_value = findViewById(R.id.textY);
         Z_value = findViewById(R.id.textZ);
+        numberOfBalls = findViewById(R.id.balls);
+        add = findViewById(R.id.add);
+        remove = findViewById(R.id.remove);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -62,6 +67,36 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 LinearLayout.LayoutParams.MATCH_PARENT));
 
         mLayout.addView(ballView);
+
+
+        numberOfBalls.setText("Balls: " + balls.size());
+
+        add.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int[] colors = {Color.BLACK, Color.BLUE, Color.RED, Color.DKGRAY, Color.CYAN, Color.MAGENTA, Color.YELLOW, Color.GREEN, Color.LTGRAY};
+
+                for (int i = 0; i<100; i++){
+                    int rnd = new Random().nextInt(colors.length);
+                    Random rn = new Random();
+                    int size = rn.nextInt(150) + 1;
+
+                    balls.add(new Ball(100,100,size,colors[rnd]));
+                    numberOfBalls.setText("Balls: " + balls.size());
+                }
+                return true;
+            }
+        });
+
+
+        remove.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                balls.clear();
+                numberOfBalls.setText("no balls :V");
+                return true;
+            }
+        });
 
 
     }
@@ -108,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         int size = rn.nextInt(150) + 1;
 
         balls.add(new Ball(100,100,size,colors[rnd]));
+        numberOfBalls.setText("Balls: " + balls.size());
 
     }
 
@@ -115,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void removeBall(View v){
         if (!balls.isEmpty())
         balls.remove(balls.size()-1);
+
+        numberOfBalls.setText("Balls: " + balls.size());
     }
 
 
@@ -135,9 +173,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             balls.add(new Ball(100,75, 20, Color.MAGENTA));
             balls.add(new Ball(100,75, 75, Color.GREEN));
             balls.add(new Ball(100,75, 60, Color.YELLOW));
-            balls.add(new Ball(100,75, 40, Color.DKGRAY));
+            balls.add(new Ball(100,75, 40, Color.GREEN));
             balls.add(new Ball(100,75, 140, Color.BLACK));
         }
+
+
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);

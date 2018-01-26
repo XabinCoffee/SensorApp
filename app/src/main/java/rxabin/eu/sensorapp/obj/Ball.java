@@ -126,4 +126,8 @@ public class Ball{
     public float getMultiplier(){
         return this.size / 30;
     }
+
+    public float getRadius(){
+        return this.size/2;
+    }
 }
