@@ -32,13 +32,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor senGyroscope;
     private List<Ball> balls = new ArrayList<>();
     private TextView X_value, Y_value, Z_value, numberOfBalls;
-    private Button add, remove;
+    private Button add, remove, toggleRandPos;
+    public int width, height;
+    public boolean randPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RelativeLayout mLayout = findViewById(R.id.main);
+        randPos = false;
 
         X_value = findViewById(R.id.textX);
         Y_value = findViewById(R.id.textY);
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         numberOfBalls = findViewById(R.id.balls);
         add = findViewById(R.id.add);
         remove = findViewById(R.id.remove);
+        toggleRandPos = findViewById(R.id.toggleRandomPosition);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -78,10 +82,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 for (int i = 0; i<100; i++){
                     int rnd = new Random().nextInt(colors.length);
-                    Random rn = new Random();
-                    int size = rn.nextInt(150) + 1;
+                    int size  = new Random().nextInt(150) + 1;
 
-                    balls.add(new Ball(100,100,size,colors[rnd]));
+                    if (randPos) {
+                        int randomHeigth = new Random().nextInt(height);
+                        int randomWidth = new Random().nextInt(width);
+                        balls.add(new Ball(randomWidth,randomHeigth,size,colors[rnd]));
+                    }else{
+                        balls.add(new Ball(100,100,size,colors[rnd]));
+                    }
                     numberOfBalls.setText("Balls: " + balls.size());
                 }
                 return true;
@@ -141,8 +150,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Random rn = new Random();
         int size = rn.nextInt(150) + 1;
-
-        balls.add(new Ball(100,100,size,colors[rnd]));
+        if (randPos) {
+            int randomHeigth = new Random().nextInt(height);
+            int randomWidth = new Random().nextInt(width);
+            balls.add(new Ball(randomWidth,randomHeigth,size,colors[rnd]));
+        }else{
+            balls.add(new Ball(100,100,size,colors[rnd]));
+        }
         numberOfBalls.setText("Balls: " + balls.size());
 
     }
@@ -155,6 +169,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         numberOfBalls.setText("Balls: " + balls.size());
     }
 
+    public void toggleRandPos(View v){
+
+        if (randPos){
+            toggleRandPos.setText("RND POS 0");
+            randPos = !randPos;
+        } else {
+            toggleRandPos.setText("RND POS 1");
+            randPos = !randPos;
+        }
+
+    }
 
     public class BallView extends View {
 
@@ -181,6 +206,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
+            width = canvas.getWidth();
+            height = canvas.getHeight();
             for(Ball ball : balls){
                 ball.move(canvas);
                 canvas.drawOval(ball.oval,ball.paint);

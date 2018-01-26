@@ -69,4 +69,16 @@
         android:layout_toStartOf="@id/add"
         android:onClick="removeBall"
         android:text="-" />
+
+    <Button
+        android:id="@+id/toggleRandomPosition"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/remove"
+        android:layout_toStartOf="@id/remove"
+        android:onClick="toggleRandPos"
+        android:text="RND POS 0"
+        android:textSize="12sp"/>
 </RelativeLayout>
