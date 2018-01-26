@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import rxabin.eu.sensorapp.obj.Ball;
 
@@ -70,26 +71,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Sensor mySensor = event.sensor;
         if (mySensor.getType() == Sensor.TYPE_GRAVITY) {
-            balls.get(1).setX_speed((float) (event.values[0]*-3.7),event.values[2]);
-            balls.get(1).setY_speed((float) (event.values[1]*3.7),event.values[2]);
 
-            balls.get(0).setX_speed((float) (event.values[0]*-2.3),event.values[2]);
-            balls.get(0).setY_speed((float) (event.values[1]*2.3),event.values[2]);
-
-            balls.get(2).setX_speed((float) (event.values[0]*-0.7),event.values[2]);
-            balls.get(2).setY_speed((float) (event.values[1]*0.7),event.values[2]);
-
-            balls.get(3).setX_speed((float) (event.values[0]*-3.3),event.values[2]);
-            balls.get(3).setY_speed((float) (event.values[1]*3.3),event.values[2]);
-
-            balls.get(4).setX_speed(event.values[0]*-4,event.values[2]);
-            balls.get(4).setY_speed(event.values[1]*4,event.values[2]);
-
-            balls.get(5).setX_speed(event.values[0]*-2,event.values[2]);
-            balls.get(5).setY_speed(event.values[1]*2,event.values[2]);
-
-            balls.get(6).setX_speed(event.values[0]*-5,event.values[2]);
-            balls.get(6).setY_speed(event.values[1]*5,event.values[2]);
+            for (Ball ball : balls){
+                ball.setX_speed((float) (event.values[0]*-ball.getMultiplier()),event.values[2]);
+                ball.setY_speed((float) (event.values[1]*ball.getMultiplier()),event.values[2]);
+            }
 
             X_value.setText("X: " + event.values[0]);
             Y_value.setText("Y: " + event.values[1]);
@@ -114,6 +100,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
 
+    public void addBall(View v){
+        int[] colors = {Color.BLACK, Color.BLUE, Color.RED, Color.DKGRAY, Color.CYAN, Color.MAGENTA, Color.YELLOW, Color.GREEN, Color.LTGRAY};
+        int rnd = new Random().nextInt(colors.length);
+
+        Random rn = new Random();
+        int size = rn.nextInt(150) + 1;
+
+        balls.add(new Ball(100,100,size,colors[rnd]));
+
+    }
+
+
+    public void removeBall(View v){
+        if (!balls.isEmpty())
+        balls.remove(balls.size()-1);
+    }
+
+
     public class BallView extends View {
 
         public BallView(Context context, AttributeSet attrs) {
@@ -126,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         private void init(){
             //Add a new ball to the view
-            balls.add(new Ball(50,50,100, Color.RED));
+            balls.add(new Ball(100,100,100, Color.RED));
             balls.add(new Ball(100,75, 50, Color.BLUE));
             balls.add(new Ball(100,75, 20, Color.MAGENTA));
             balls.add(new Ball(100,75, 75, Color.GREEN));

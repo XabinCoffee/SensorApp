@@ -40,4 +40,26 @@
         android:layout_above="@+id/textX"
         android:layout_alignStart="@+id/textX"
         android:text="Gravity" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="+"
+        android:onClick="addBall"/>
+
+    <Button
+        android:id="@+id/remove"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/add"
+        android:layout_toStartOf="@id/add"
+        android:onClick="removeBall"
+        android:text="-" />
 </RelativeLayout>
