@@ -31,10 +31,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager senSensorManager;
     private Sensor senGyroscope;
     private List<Ball> balls = new ArrayList<>();
-    private TextView X_value, Y_value, Z_value, numberOfBalls;
+    private TextView X_value, Y_value, Z_value, numberOfBalls, X_speed, Y_speed;
     private Button add, remove, toggleRandPos;
     public int width, height;
-    public boolean randPos;
+    public boolean randPos, debug;
+    private RelativeLayout debug_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
         RelativeLayout mLayout = findViewById(R.id.main);
         randPos = false;
+        debug = false;
 
         X_value = findViewById(R.id.textX);
         Y_value = findViewById(R.id.textY);
@@ -50,6 +52,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         add = findViewById(R.id.add);
         remove = findViewById(R.id.remove);
         toggleRandPos = findViewById(R.id.toggleRandomPosition);
+        X_speed = findViewById(R.id.X_speed);
+        Y_speed = findViewById(R.id.Y_speed);
+        debug_info = findViewById(R.id.debug_info);
+        debug_info.setVisibility(View.GONE);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -107,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-
     }
 
     @Override
@@ -121,9 +127,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 ball.setY_speed((float) (event.values[1]*ball.getMultiplier()),event.values[2]);
             }
 
-            X_value.setText("X: " + event.values[0]);
-            Y_value.setText("Y: " + event.values[1]);
-            Z_value.setText("Z: " + event.values[2]);
+
+            if (!balls.isEmpty()) {
+                X_speed.setText("X: " + String.format(java.util.Locale.US, "%.5f",balls.get(0).getX_speed()));
+                Y_speed.setText("Y: " + String.format(java.util.Locale.US, "%.5f",balls.get(0).getY_speed()));
+            }
+
+
+            X_value.setText("X: " + String.format(java.util.Locale.US, "%.5f",event.values[0]));
+            Y_value.setText("Y: " + String.format(java.util.Locale.US, "%.5f",event.values[1]));
+            Z_value.setText("Z: " + String.format(java.util.Locale.US, "%.5f",event.values[2]));
         }
 
     }
@@ -158,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             balls.add(new Ball(100,100,size,colors[rnd]));
         }
         numberOfBalls.setText("Balls: " + balls.size());
-
     }
 
 
@@ -181,6 +193,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+
+    public void toggleDebugInfo(View v){
+        if (debug){
+            debug = !debug;
+            debug_info.setVisibility(View.GONE);
+        }else{
+            debug = !debug;
+            debug_info.setVisibility(View.VISIBLE);
+        }
+    }
+
     public class BallView extends View {
 
         public BallView(Context context, AttributeSet attrs) {
@@ -193,13 +216,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         private void init(){
             //Add a new ball to the view
-            balls.add(new Ball(100,100,100, Color.RED));
-            balls.add(new Ball(100,75, 50, Color.BLUE));
+            balls.add(new Ball(300,300,100, Color.RED));
+            /*balls.add(new Ball(100,75, 50, Color.BLUE));
             balls.add(new Ball(100,75, 20, Color.MAGENTA));
             balls.add(new Ball(100,75, 75, Color.GREEN));
             balls.add(new Ball(100,75, 60, Color.YELLOW));
             balls.add(new Ball(100,75, 40, Color.GREEN));
-            balls.add(new Ball(100,75, 140, Color.BLACK));
+            balls.add(new Ball(100,75, 140, Color.BLACK));*/
         }
 
 

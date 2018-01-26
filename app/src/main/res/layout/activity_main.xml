@@ -7,47 +7,90 @@
     tools:context="rxabin.eu.sensorapp.MainActivity"
     android:id="@+id/main">
 
-    <TextView
-        android:id="@+id/textY"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textZ"
-        android:layout_alignStart="@+id/textZ"
-        android:text="Y" />
+    <RelativeLayout
+        android:id="@+id/debug_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textY"
-        android:layout_alignStart="@+id/textY"
-        android:text="X" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp">
 
-    <TextView
-        android:id="@+id/textZ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="12dp"
-        android:layout_marginStart="12dp"
-        android:text="Z" />
 
-    <TextView
-        android:id="@+id/gravity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textX"
-        android:layout_alignStart="@+id/textX"
-        android:text="Gravity" />
+            <TextView
+                android:id="@+id/speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Speed"
+                android:layout_above="@id/X_speed"/>
 
-    <TextView
-        android:id="@+id/balls"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/gravity"
-        android:layout_alignStart="@+id/gravity"
-        android:text="Balls: " />
+            <TextView
+                android:id="@+id/X_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X"
+                android:layout_above="@id/Y_speed"/>
+
+            <TextView
+                android:id="@+id/Y_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Y"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/gravity_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:id="@+id/textZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="12dp"
+                android:text="Z" />
+
+            <TextView
+                android:id="@+id/gravity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textX"
+                android:layout_alignStart="@+id/textX"
+                android:text="Gravity" />
+
+            <TextView
+                android:id="@+id/balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/gravity"
+                android:layout_alignStart="@+id/gravity"
+                android:text="Balls: " />
+
+            <TextView
+                android:id="@+id/textX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textY"
+                android:layout_alignStart="@+id/textY"
+                android:text="X" />
+
+            <TextView
+                android:id="@+id/textY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textZ"
+                android:layout_alignStart="@+id/textZ"
+                android:text="Y" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
     <Button
         android:id="@+id/add"
         android:layout_width="wrap_content"
@@ -80,5 +123,17 @@
         android:layout_toStartOf="@id/remove"
         android:onClick="toggleRandPos"
         android:text="RND POS 0"
+        android:textSize="12sp"/>
+
+    <Button
+        android:id="@+id/toggleDebug"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/toggleRandomPosition"
+        android:layout_toStartOf="@id/toggleRandomPosition"
+        android:onClick="toggleDebugInfo"
+        android:text="Debug"
         android:textSize="12sp"/>
 </RelativeLayout>

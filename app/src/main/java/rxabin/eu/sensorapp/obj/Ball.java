@@ -45,7 +45,7 @@ public class Ball{
                 } else {
                     this.x = canvas.getWidth()- size/2 - 3;
                 }
-               x_speed = (x_speed*-1)/(float)1.2;
+                x_speed = (x_speed*-1)/(float)1.2;
 
             }
             if(this.y-size<0 || this.y+size > canvas.getHeight()){
@@ -89,10 +89,12 @@ public class Ball{
         return x_speed;
     }
 
-    public void setX_speed(float x_speed, float z_grav) {
+    public void setX_speed(float x_speed, float z_gravt) {
 
-        if (z_grav > 3) this.x_speed = (float) ((this.x_speed/1.025) + (x_speed / z_grav));
-        else this.x_speed = (float) ((this.x_speed/1.025) + (x_speed/3));
+        float z_grav = z_gravt / 2;
+
+        if (z_grav > 1.5) this.x_speed = (float) ((this.x_speed/1.025) + (x_speed*1.8/ z_grav));
+        else this.x_speed = (float) ((this.x_speed/1.025) + (x_speed*1.8 / 3));
 
     }
 
@@ -100,10 +102,12 @@ public class Ball{
         return y_speed;
     }
 
-    public void setY_speed(float y_speed, float z_grav) {
+    public void setY_speed(float y_speed, float z_gravt) {
 
-        if (z_grav > 3) this.y_speed = (float) ((this.y_speed/1.025) + (y_speed / z_grav));
-        else this.y_speed = (float) ((this.y_speed/1.025) + (y_speed / 3));
+        float z_grav = z_gravt / 2;
+
+        if (z_grav > 1.5) this.y_speed = (float) ((this.y_speed/1.025) + (y_speed*1.8 / z_grav));
+        else this.y_speed = (float) ((this.y_speed/1.025) + (y_speed*1.8 / 3));
 
     }
 
