@@ -4,8 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="rxabin.eu.sensorapp.MainActivity"
-    android:id="@+id/main">
+    tools:context="rxabin.eu.meme.MainActivity"
+    android:background="#2b1349"
+    android:id="@+id/the_whole_fucking_screen">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffdeb9"
+        android:layout_centerInParent="true"
+        android:text="deez nutt" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:lottie_rawRes="@raw/dino_dance"
+        app:lottie_loop="true"
+        android:visibility="gone"
+    app:lottie_autoPlay="true" />
 
     <RelativeLayout
         android:id="@+id/debug_info"
@@ -99,6 +117,7 @@
         android:minHeight="40dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:visibility="gone"
         android:text="+"
         android:onClick="addBall"/>
 
@@ -111,6 +130,7 @@
         android:layout_toLeftOf="@id/add"
         android:layout_toStartOf="@id/add"
         android:onClick="removeBall"
+        android:visibility="gone"
         android:text="-" />
 
     <Button
@@ -123,6 +143,7 @@
         android:layout_toStartOf="@id/remove"
         android:onClick="toggleRandPos"
         android:text="RND POS 0"
+        android:visibility="gone"
         android:textSize="12sp"/>
 
     <Button
@@ -135,5 +156,6 @@
         android:layout_toStartOf="@id/toggleRandomPosition"
         android:onClick="toggleDebugInfo"
         android:text="Debug"
+        android:visibility="gone"
         android:textSize="12sp"/>
 </RelativeLayout>
